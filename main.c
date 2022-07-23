@@ -6,9 +6,7 @@ void renderMenu();
 void insert();
 char *saveDirector();
 
-int main()
-{
-
+void main() {
     int module = scanModule();
     if (module == 1) {
         insert();
@@ -18,15 +16,14 @@ int main()
 int scanModule() {
     int isValid = 1, module;
     do {
-        if (!isValid) {
-            printf("Opção inválida. Tente novamente\n");
-        }
+        if (!isValid) printf("Opção inválida. Tente novamente\n");
         renderMenu();
         scanf("%i", &module);
         if (module != 1 && module != 2 && module != 3 && module != 4) {
             isValid = 0;
         }
     } while (isValid == 0);
+
     return module;
 }
 
@@ -44,8 +41,7 @@ void insert() {
 }
 
 char *saveDirector() {
-    char *director;
-    director = malloc(sizeof(char *) * 2);
+    char *director = malloc(sizeof(char *) * 2);
     printf("Informe o nome do diretor: \n");
     scanf("%s", &director[0]);
 
