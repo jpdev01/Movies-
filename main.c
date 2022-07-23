@@ -9,10 +9,17 @@ void saveData();
 void saveMovie();
 
 void main() {
-    int module = scanModule();
-    if (module == 1) {
-        insert();
+    int finish = 0;
+    while (!finish) {
+        int module = scanModule();
+        if (module == 1) {
+            insert();
+        } else if (module == 5) {
+            finish = 1;
+        }
     }
+
+    printf("----- PROGRAMA ENCERRADO -------.");
 }
 
 int scanModule() {
@@ -21,7 +28,7 @@ int scanModule() {
         if (!isValid) printf("Opção inválida. Tente novamente\n");
         renderMenu();
         scanf("%i", &module);
-        if (module != 1 && module != 2 && module != 3 && module != 4) {
+        if (module != 1 && module != 2 && module != 3 && module != 4 && module != 5) {
             isValid = 0;
         }
     } while (isValid == 0);
@@ -35,6 +42,7 @@ void renderMenu() {
     printf("2 - Remover registros existentes\n");
     printf("3 - Listar registros\n");
     printf("4 - Consultar por campo chave\n");
+    printf("5 - Encerrar o programa\n");
 }
 
 void insert() {
