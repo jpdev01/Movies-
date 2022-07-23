@@ -6,6 +6,7 @@ void renderMenu();
 void insert();
 void saveDirector();
 void saveData();
+void saveMovie();
 
 void main() {
     int module = scanModule();
@@ -38,11 +39,7 @@ void renderMenu() {
 
 void insert() {
     printf("---- ADICIONAR NOVO REGISTRO ------\n");
-    struct Director director;
-    saveDirector(&director);
-    struct Data data;
-    saveData(&data);
-
+    saveMovie();
 }
 
 void saveDirector(struct Director *director) {
@@ -63,4 +60,18 @@ void saveData(struct Data *data) {
 
     printf("Informe o ano de lançamento: ");
     scanf("%i", &data -> year);
+}
+
+void saveMovie(struct Movie *movie) {
+    printf("Informe o nome do filme: \n");
+    scanf("%s", &movie -> name);
+
+    printf("Informe a duração do filme (em minutos): \n");
+    scanf("%i", &movie -> length);
+
+    printf("Informe o estilo do filme: \n");
+    scanf("%s", &movie -> style);
+
+    saveDirector(&movie -> director);
+    saveData(&movie -> data);
 }
