@@ -1,11 +1,11 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include "Director.c"
+#include "Movie.c"
 
 int scanModule();
 void renderMenu();
 void insert();
 void saveDirector();
+void saveData();
 
 void main() {
     int module = scanModule();
@@ -40,6 +40,9 @@ void insert() {
     printf("---- ADICIONAR NOVO REGISTRO ------\n");
     struct Director director;
     saveDirector(&director);
+    struct Data data;
+    saveData(&data);
+
 }
 
 void saveDirector(struct Director *director) {
@@ -49,4 +52,15 @@ void saveDirector(struct Director *director) {
 
     printf("Informe a nacionalidade do diretor: \n");
     scanf("%s", &director -> nacionality);
+}
+
+void saveData(struct Data *data) {
+    printf("Informe o dia de lançamento: ");
+    scanf("%i", &data -> day);
+
+    printf("Informe o mês de lançamento: ");
+    scanf("%i", &data -> month);
+
+    printf("Informe o ano de lançamento: ");
+    scanf("%i", &data -> year);
 }
