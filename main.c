@@ -1,10 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "Director.c"
 
 int scanModule();
 void renderMenu();
 void insert();
-char *saveDirector();
+void saveDirector();
 
 void main() {
     int module = scanModule();
@@ -37,16 +38,15 @@ void renderMenu() {
 
 void insert() {
     printf("---- ADICIONAR NOVO REGISTRO ------\n");
-    char *director = saveDirector();
+    struct Director director;
+    saveDirector(&director);
 }
 
-char *saveDirector() {
-    char *director = malloc(sizeof(char *) * 2);
+void saveDirector(struct Director *director) {
     printf("Informe o nome do diretor: \n");
-    scanf("%s", &director[0]);
+    scanf("%s", &director -> name);
+    //gets(director -> name);
 
     printf("Informe a nacionalidade do diretor: \n");
-    scanf("%s", &director[1]);
-
-    return director;
+    scanf("%s", &director -> nacionality);
 }
