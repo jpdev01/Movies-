@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Movie.c"
 
 int scanModule();
@@ -9,11 +10,14 @@ void saveData();
 void saveMovie();
 
 void main() {
+    struct Movie **movies = malloc(sizeof(struct Movie**) * 1);
+    int numberOfMovies = 0;
+
     int finish = 0;
     while (!finish) {
         int module = scanModule();
         if (module == 1) {
-            insert();
+            insert(movies, numberOfMovies);
         } else if (module == 5) {
             finish = 1;
         }
@@ -45,9 +49,13 @@ void renderMenu() {
     printf("5 - Encerrar o programa\n");
 }
 
-void insert() {
+void insert(struct Movie **movies, int numberOfMovies) {
     printf("---- ADICIONAR NOVO REGISTRO ------\n");
-    saveMovie();
+    struct Movie *movie;
+    saveMovie(&movie);
+    numberOfMovies++;
+    movies = realloc(movies, sizeof(struct Movie*) * numberOfMovies);
+    movies[numberOfMovies] = movie;
 }
 
 void saveDirector(struct Director *director) {
@@ -72,6 +80,7 @@ void saveData(struct Data *data) {
 
 void saveMovie(struct Movie *movie) {
     printf("Informe o nome do filme: \n");
+    // nao pode ter repetido
     scanf("%s", &movie -> name);
 
     printf("Informe a duração do filme (em minutos): \n");
