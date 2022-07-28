@@ -5,6 +5,6 @@ struct Movie {
     char name[50];
     int length;
     char style[50];
-    struct Director director;
-    struct Data data;
+    struct Director *director;
+    struct Data *data;
 };
