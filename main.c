@@ -116,14 +116,17 @@ void saveMovie(struct Movie **movies, int index) {
     scanf("%i", &movies[index] -> data -> year);
 }
 
-void printMovie(struct Movie *movie) {
-    printf("%s \t", movie->name);
-    printf("\t%s\t ", movie->director->name);
-    printf("\t\t\t%s \t\t\t\t", movie->director->nacionality);
-    printf("%i/%i/%i\n",
-           movie->data->day,
-           movie->data->month,
-           movie->data->year);
+void printMovie(struct Movie movie) {
+    printf("%s \t", movie.name);
+    struct Director director = *movie.director;
+    printf("\t%s\t ", director.name);
+    printf("\t\t\t%s \t\t\t\t", director.nacionality);
+
+    struct Data data = *movie.data;
+    printf("%i/%i/%i \n",
+           data.day,
+           data.month,
+           data.year);
 }
 
 void list(struct Movie **movies, int numberOfMovies) {
@@ -131,9 +134,9 @@ void list(struct Movie **movies, int numberOfMovies) {
 
     renderizaCabecalhoDeFilme();
     for (int i = 0; i < numberOfMovies; i++) {
-        printMovie(movies[i]);
-        printf("-------------------------------------------------------------------------------------------\n\n");
+        printMovie(*movies[i]);
     }
+    printf("-------------------------------------------------------------------------------------------\n\n");
 }
 
 struct Movie* getMovie(struct Movie** movies, int numberOfMovies, char name[]) {
@@ -152,7 +155,8 @@ void findMovie(struct Movie** movies, int numberOfMovies) {
 
     struct Movie *movie = getMovie(movies, numberOfMovies, nome);
     if (movie) {
-        printMovie(movie);
+        renderizaCabecalhoDeFilme();
+        printMovie(*movie);
         return;
     }
 
