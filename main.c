@@ -19,17 +19,25 @@ void main() {
     int finish = 0;
     while (!finish) {
         int module = scanModule();
-        if (module == 1) {
-            numberOfMovies = insert(movies, numberOfMovies);
-        }else if (module == 2) {
-            numberOfMovies = removeMovie(movies, numberOfMovies);
-        } else if (module == 3) {
-            list(movies, numberOfMovies);
-        } else if (module == 4) {
-            findMovie(movies, numberOfMovies);
-        } else if (module == 5) {
-            writeFile();
-            finish = 1;
+        switch (module) {
+            case 1:
+                numberOfMovies = insert(movies, numberOfMovies);
+                break;
+            case 2:
+                numberOfMovies = removeMovie(movies, numberOfMovies);
+                break;
+            case 3:
+                list(movies, numberOfMovies);
+                break;
+            case 4:
+                findMovie(movies, numberOfMovies);
+                break;
+            case 5:
+                writeFile();
+                finish = 1;
+                break;
+            default:
+                printf("Opção inválida. Tente novamente.\n");
         }
     }
 
@@ -37,16 +45,9 @@ void main() {
 }
 
 int scanModule() {
-    int isValid = 1, module;
-    do {
-        if (!isValid) printf("Opção inválida. Tente novamente\n");
-        renderMenu();
-        scanf("%i", &module);
-        if (module != 1 && module != 2 && module != 3 && module != 4 && module != 5) {
-            isValid = 0;
-        }
-    } while (isValid == 0);
-
+    int module;
+    renderMenu();
+    scanf("%i", &module);
     return module;
 }
 
