@@ -105,8 +105,6 @@ void saveMovie(struct Movie **movies, int index) {
     printf("Informe a nacionalidade do diretor: \n");
     scanf("%s", &movies[index] -> director -> nacionality);
 
-    printf("%s", movies[0] -> name);
-
     movies[index] -> data = malloc(sizeof(struct Data*) * 1);
     printf("Informe o dia de lançamento: ");
     scanf("%i", &movies[index] -> data -> day);
