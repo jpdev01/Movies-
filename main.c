@@ -13,6 +13,10 @@ int removeMovie();
 void writeFile();
 int isValidMovieName();
 
+void renderMovieNotFound() {
+    printf("Filme nao cadastrado! Tente novamente. \n");
+}
+
 void awaitingConfirmation() {
     printf("TECLE ALGO PARA VOLTAR AO MENU");
     getchar();
@@ -167,7 +171,7 @@ void findMovie(struct Movie** movies, int numberOfMovies) {
         return;
     }
 
-    printf("Nao encontrado!");
+    renderMovieNotFound();
 }
 
 int removeMovie(struct Movie** movies, int numberOfMovies) {
@@ -176,7 +180,7 @@ int removeMovie(struct Movie** movies, int numberOfMovies) {
     scanf("%s", &name);
     struct Movie *movie = getMovie(movies, numberOfMovies, name);
     if (movie == NULL) {
-        printf("Filme nao encontrado! \n");
+        renderMovieNotFound();
         return numberOfMovies;
     }
 
