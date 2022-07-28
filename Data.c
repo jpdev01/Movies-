@@ -3,3 +3,5 @@ struct Data {
     int month;
     int year;
 };
+
+typedef struct Data Data;

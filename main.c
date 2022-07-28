@@ -5,12 +5,12 @@
 int scanModule();
 void renderMenu();
 void insert();
-void saveDirector();
-void saveData();
-void saveMovie();
+ Director saveDirector();
+ Data saveData();
+ Movie addMovie();
 
 void main() {
-    struct Movie **movies = malloc(sizeof(struct Movie**) * 1);
+    Movie *movies = malloc(sizeof(Movie *) * 1);
     int numberOfMovies = 0;
 
     int finish = 0;
@@ -49,46 +49,53 @@ void renderMenu() {
     printf("5 - Encerrar o programa\n");
 }
 
-void insert(struct Movie **movies, int numberOfMovies) {
+void insert( Movie *movies, int numberOfMovies) {
     printf("---- ADICIONAR NOVO REGISTRO ------\n");
-    struct Movie *movie;
-    saveMovie(&movie);
-    numberOfMovies++;
-    movies = realloc(movies, sizeof(struct Movie*) * numberOfMovies);
+
+    Movie movie;
+    movie = addMovie(movie);
+
+    movies = realloc(movies, sizeof(Movie*) * numberOfMovies);
     movies[numberOfMovies] = movie;
+    numberOfMovies++;
 }
 
-void saveDirector(struct Director *director) {
+ Director saveDirector( Director director) {
     printf("Informe o nome do diretor: \n");
-    scanf("%s", &director -> name);
-    //gets(director -> name);
+    scanf("%s", &director.name);
 
     printf("Informe a nacionalidade do diretor: \n");
-    scanf("%s", &director -> nacionality);
+    scanf("%s", &director.nacionality);
+
+    return director;
 }
 
-void saveData(struct Data *data) {
+Data saveData( Data data) {
     printf("Informe o dia de lançamento: ");
-    scanf("%i", &data -> day);
+    scanf("%i", &data.day);
 
     printf("Informe o mês de lançamento: ");
-    scanf("%i", &data -> month);
+    scanf("%i", &data.month);
 
     printf("Informe o ano de lançamento: ");
-    scanf("%i", &data -> year);
+    scanf("%i", &data.year);
+
+    return data;
 }
 
-void saveMovie(struct Movie *movie) {
+Movie addMovie(Movie movie) {
     printf("Informe o nome do filme: \n");
     // nao pode ter repetido
-    scanf("%s", &movie -> name);
+    scanf("%s", &movie.name);
 
     printf("Informe a duração do filme (em minutos): \n");
-    scanf("%i", &movie -> length);
+    scanf("%i", &movie.length);
 
     printf("Informe o estilo do filme: \n");
-    scanf("%s", &movie -> style);
+    scanf("%s", &movie.style);
 
-    saveDirector(&movie -> director);
-    saveData(&movie -> data);
+    saveDirector(movie.director);
+    saveData(movie.data);
+
+    return movie;
 }
