@@ -4,15 +4,13 @@
 #include "Movie.c"
 
 int scanModule();
-
 void renderMenu();
-
 int insert();
-
 void saveMovie();
 void list();
 void findMovie();
 int removeMovie();
+void writeFile();
 
 void main() {
     struct Movie **movies = malloc(sizeof(struct Movie **) * 1);
@@ -30,6 +28,7 @@ void main() {
         } else if (module == 4) {
             findMovie(movies, numberOfMovies);
         } else if (module == 5) {
+            writeFile();
             finish = 1;
         }
     }
@@ -171,4 +170,13 @@ int removeMovie(struct Movie** movies, int numberOfMovies) {
     }
 
     return numberOfMovies;
+}
+
+void writeFile(struct Movie **movies) {
+    FILE *arquivo = fopen("cadastro_de_filmes.txt", "ab");
+    if (arquivo == NULL) {
+        printf("Problema ao abrir o arquivo\n");
+    } else {
+        fwrite(&movies, sizeof(struct Movie**), 1, arquivo);
+    }
 }
