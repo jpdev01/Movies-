@@ -12,6 +12,7 @@ int insert();
 void saveMovie();
 void list();
 void findMovie();
+int removeMovie();
 
 void main() {
     struct Movie **movies = malloc(sizeof(struct Movie **) * 1);
@@ -23,6 +24,8 @@ void main() {
         if (module == 1) {
             numberOfMovies = insert(movies, numberOfMovies);
         }else if (module == 2) {
+            numberOfMovies = removeMovie(movies, numberOfMovies);
+        } else if (module == 3) {
             list(movies, numberOfMovies);
         } else if (module == 4) {
             findMovie(movies, numberOfMovies);
@@ -122,17 +125,50 @@ void list(struct Movie **movies, int numberOfMovies) {
     }
 }
 
+struct Movie* getMovie(struct Movie** movies, int numberOfMovies, char name[]) {
+    for (int index = 0; index < numberOfMovies; index++) {
+        if (strcmp(movies[index] -> name, name) == 0) {
+            return movies[index];
+        }
+    }
+    return NULL;
+}
+
 void findMovie(struct Movie** movies, int numberOfMovies) {
     char nome[50];
     printf("Informe o nome do filme");
     scanf("%s", &nome);
 
-    for (int index = 0; index < numberOfMovies; index++) {
-        if (strcmp(movies[index] -> name, nome) == 0) {
-            printMovie(movies[index]);
-            return;
-        }
+    struct Movie *movie = getMovie(movies, numberOfMovies, nome);
+    if (movie) {
+        printMovie(movie);
+        return;
     }
 
     printf("Nao encontrado!");
+}
+
+int removeMovie(struct Movie** movies, int numberOfMovies) {
+    char name[50];
+    printf("Informe o nome do filme");
+    scanf("%s", &name);
+    struct Movie *movie = getMovie(movies, numberOfMovies, name);
+    if (movie == NULL) {
+        printf("Nao encontrado!");
+        return numberOfMovies;
+    }
+
+    int latestIndex = 0;
+    for (int index = 0; index < numberOfMovies; index++) {
+        if (strcmp(movies[index] -> name, name) == 0) {
+            movies[index] = NULL;
+            free(movies[index]);
+            numberOfMovies--;
+        } else {
+            movies[latestIndex] = movies[index];
+            latestIndex++;
+        }
+    }
+
+    return numberOfMovies;
 }
