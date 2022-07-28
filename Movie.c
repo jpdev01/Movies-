@@ -2,11 +2,9 @@
 #include "Data.c"
 
 struct Movie {
-    char name[50];
+    char *name;
     int length;
-    char style[50];
+    char *style;
     struct Director director;
     struct Data data;
 };
-
-typedef struct Movie Movie;
