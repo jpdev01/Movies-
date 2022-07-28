@@ -91,7 +91,7 @@ void saveMovie(struct Movie **movies, int index) {
     int isValid;
     do {
         printf("Informe o nome do filme: \n");
-        scanf("%s", &name);
+        scanf(" %39[^\n]", name);
 
         // valida repeticao
         isValid = isValidMovieName(movies, index, name);
@@ -103,18 +103,17 @@ void saveMovie(struct Movie **movies, int index) {
     } while (!isValid);
 
     printf("Informe a duração do filme (em minutos): \n");
-    getsf
     scanf("%i", &movies[index]->length);
 
     printf("Informe o estilo do filme: \n");
-    scanf("%s", &movies[index] -> style);
+    scanf(" %39[^\n]", &movies[index] -> style);
 
     movies[index] -> director = malloc(sizeof(struct Director*) * 1);
     printf("Informe o nome do diretor: \n");
-    scanf("%s", &movies[index] -> director -> name);
+    scanf(" %39[^\n]", &movies[index] -> director -> name);
 
     printf("Informe a nacionalidade do diretor: \n");
-    scanf("%s", &movies[index] -> director -> nacionality);
+    scanf(" %39[^\n]", &movies[index] -> director -> nacionality);
 
     movies[index] -> data = malloc(sizeof(struct Data*) * 1);
     printf("Informe o dia de lançamento: ");
