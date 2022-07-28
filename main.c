@@ -80,7 +80,7 @@ int insert(struct Movie **movies, int numberOfMovies) {
     return numberOfMovies;
 }
 
-void renderizaCabecalhoDeFilme() {
+void renderMovieHeader() {
     printf("Filme \t|\tDiretor \t|\tNacionalidade\t|\t\tCadastramento\n");
 }
 
@@ -103,6 +103,7 @@ void saveMovie(struct Movie **movies, int index) {
     } while (!isValid);
 
     printf("Informe a duração do filme (em minutos): \n");
+    getsf
     scanf("%i", &movies[index]->length);
 
     printf("Informe o estilo do filme: \n");
@@ -142,7 +143,7 @@ void printMovie(struct Movie movie) {
 void list(struct Movie **movies, int numberOfMovies) {
     printf("----Listagem de Filmes Cadastrados----\n");
 
-    renderizaCabecalhoDeFilme();
+    renderMovieHeader();
     for (int i = 0; i < numberOfMovies; i++) {
         printMovie(*movies[i]);
     }
@@ -166,7 +167,7 @@ void findMovie(struct Movie** movies, int numberOfMovies) {
 
     struct Movie *movie = getMovie(movies, numberOfMovies, nome);
     if (movie) {
-        renderizaCabecalhoDeFilme();
+        renderMovieHeader();
         printMovie(*movie);
         return;
     }
