@@ -1,4 +1,4 @@
 struct Director {
-    char *name;
-    char *nacionality;
+    char name[50];
+    char nacionality[50];
 };
