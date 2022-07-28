@@ -11,6 +11,7 @@ void list();
 void findMovie();
 int removeMovie();
 void writeFile();
+int isValidMovieName();
 
 void main() {
     struct Movie **movies = malloc(sizeof(struct Movie **) * 1);
@@ -75,9 +76,21 @@ void renderizaCabecalhoDeFilme() {
 
 void saveMovie(struct Movie **movies, int index) {
     movies[index] = malloc(sizeof(struct Movie *) * 1);
-    printf("Informe o nome do filme: \n");
-    // nao pode ter repetido criar validacao
-    scanf("%s", &movies[index]->name);
+
+    char name[50];
+    int isValid;
+    do {
+        printf("Informe o nome do filme: \n");
+        scanf("%s", &name);
+
+        // valida repeticao
+        isValid = isValidMovieName(movies, index, name);
+        if (isValid) {
+            strcpy(movies[index] -> name, name);
+        } else {
+            printf("Nome do filme já em uso! \n");
+        }
+    } while (!isValid);
 
     printf("Informe a duração do filme (em minutos): \n");
     scanf("%i", &movies[index]->length);
@@ -180,4 +193,13 @@ void writeFile(struct Movie **movies) {
     } else {
         fwrite(&movies, sizeof(struct Movie**), 1, arquivo);
     }
+}
+
+int isValidMovieName(struct Movie **movies, int numberOfMovies, char name[]) {
+    if (numberOfMovies <= 0) return 1;
+    struct Movie *movie = getMovie(movies, numberOfMovies, name);
+    if (movie == NULL) {
+        return 1;
+    }
+    return 0;
 }
