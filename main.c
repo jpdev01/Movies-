@@ -13,6 +13,12 @@ int removeMovie();
 void writeFile();
 int isValidMovieName();
 
+void awaitingConfirmation() {
+    printf("TECLE ALGO PARA VOLTAR AO MENU");
+    getchar();
+    scanf("c\n");
+}
+
 void main() {
     struct Movie **movies = malloc(sizeof(struct Movie **) * 1);
     int numberOfMovies = 0;
@@ -137,6 +143,7 @@ void list(struct Movie **movies, int numberOfMovies) {
         printMovie(*movies[i]);
     }
     printf("-------------------------------------------------------------------------------------------\n\n");
+    awaitingConfirmation();
 }
 
 struct Movie* getMovie(struct Movie** movies, int numberOfMovies, char name[]) {
@@ -150,7 +157,7 @@ struct Movie* getMovie(struct Movie** movies, int numberOfMovies, char name[]) {
 
 void findMovie(struct Movie** movies, int numberOfMovies) {
     char nome[50];
-    printf("Informe o nome do filme");
+    printf("Informe o nome do filme: ");
     scanf("%s", &nome);
 
     struct Movie *movie = getMovie(movies, numberOfMovies, nome);
@@ -169,9 +176,18 @@ int removeMovie(struct Movie** movies, int numberOfMovies) {
     scanf("%s", &name);
     struct Movie *movie = getMovie(movies, numberOfMovies, name);
     if (movie == NULL) {
-        printf("Nao encontrado!");
+        printf("Filme nao encontrado! \n");
         return numberOfMovies;
     }
+
+    printMovie(*movie);
+    int confirmation;
+    do {
+        printf("Confirma exclusão do filme escolhido? (1=sim 2=não):");
+        scanf("%i", &confirmation);
+    } while (confirmation != 0 && confirmation != 1);
+
+    if (confirmation == 0) return numberOfMovies;
 
     int latestIndex = 0;
     for (int index = 0; index < numberOfMovies; index++) {
