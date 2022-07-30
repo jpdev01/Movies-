@@ -44,7 +44,7 @@ void main() {
                 findMovie(movies, numberOfMovies);
                 break;
             case 5:
-                writeFile();
+                writeFile(movies, numberOfMovies);
                 finish = 1;
                 break;
             default:
@@ -115,7 +115,7 @@ void saveMovie(struct Movie **movies, int index) {
     printf("Informe a nacionalidade do diretor: \n");
     scanf(" %39[^\n]", &movies[index] -> director -> nacionality);
 
-    movies[index] -> data = malloc(sizeof(struct Data*) * 1);
+    movies[index] -> data = malloc(sizeof(struct Data*) * 4);
     printf("Informe o dia de lançamento: ");
     scanf("%i", &movies[index] -> data -> day);
 
@@ -128,20 +128,26 @@ void saveMovie(struct Movie **movies, int index) {
 
 void printMovie(struct Movie movie) {
     printf("%s \t", movie.name);
+
     struct Director director = *movie.director;
     printf("\t%s\t ", director.name);
     printf("\t\t\t%s \t\t\t\t", director.nacionality);
 
-    struct Data data = *movie.data;
-    printf("%i/%i/%i \n",
-           data.day,
-           data.month,
-           data.year);
+    struct Data date = *movie.data;
+    printf("%i/%i/%i ",
+           date.day,
+           date.month,
+           date.year);
+    printf("\n");
 }
 
 void list(struct Movie **movies, int numberOfMovies) {
     printf("----Listagem de Filmes Cadastrados----\n");
 
+    if (numberOfMovies == 0) {
+        printf("Não há filmes cadastrados!\n");
+        return;
+    }
     renderMovieHeader();
     for (int i = 0; i < numberOfMovies; i++) {
         printMovie(*movies[i]);
@@ -175,6 +181,10 @@ void findMovie(struct Movie** movies, int numberOfMovies) {
 }
 
 int removeMovie(struct Movie** movies, int numberOfMovies) {
+    if (numberOfMovies == 0) {
+        printf("Não há filmes cadastrados!\n");
+        return numberOfMovies;
+    }
     char name[50];
     printf("Informe o nome do filme");
     scanf("%s", &name);
@@ -208,12 +218,15 @@ int removeMovie(struct Movie** movies, int numberOfMovies) {
     return numberOfMovies;
 }
 
-void writeFile(struct Movie **movies) {
-    FILE *arquivo = fopen("cadastro_de_filmes.txt", "ab");
-    if (arquivo == NULL) {
+void writeFile(struct Movie **movies, int numberOfMovies) {
+    FILE *file = fopen("cadastro_de_filmes.txt", "ab");
+    if (file == NULL) {
         printf("Problema ao abrir o arquivo\n");
     } else {
-        fwrite(&movies, sizeof(struct Movie**), 1, arquivo);
+        for (int index = 0; index < numberOfMovies; index++) {
+            fwrite(&movies[index], sizeof(struct Movie), 1, file);
+        }
+        fclose(file);
     }
 }
 
